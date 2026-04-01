@@ -1,0 +1,101 @@
+import java.util.Scanner;
+
+class Carro {
+    private String modelo;
+    private String marca;
+    private int ano;
+    private double capacidadeTanque; // capacidade do tanque em litros
+    
+    public Carro(String modelo, String marca, int ano, double capacidadeTanque) {
+        this.modelo = modelo;
+        this.marca = marca;
+        this.ano = ano;
+        this.capacidadeTanque = capacidadeTanque;
+    }
+    
+    public String getModelo() {
+        return modelo;
+    }
+    
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+    
+    public String getMarca() {
+        return marca;
+    }
+    
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+    
+    public int getAno() {
+        return ano;
+    }
+    
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+    
+    public double getCapacidadeTanque() {
+        return capacidadeTanque;
+    }
+    
+    public void setCapacidadeTanque(double capacidadeTanque) {
+        if (capacidadeTanque > 0) {
+            this.capacidadeTanque = capacidadeTanque;
+        } else {
+            System.out.println("Capacidade de tanque inválida!");
+        }
+    }
+    
+    public double calcularTotalEncherTanque(double precoGasolina) {
+        if (precoGasolina > 0) {
+            return capacidadeTanque * precoGasolina;
+        } else {
+            System.out.println("Preço da gasolina inválido!");
+            return 0;
+        }
+    }
+    
+    public void exibirInformacoes() {
+        System.out.println("Carro: " + marca + " " + modelo + " (" + ano + ")");
+        System.out.println("Capacidade do tanque: " + capacidadeTanque + " litros");
+    }
+}
+
+// Classe principal
+public class Exercicio1Carro {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("========== EXERCÍCIO 1: CARRO ==========");
+        System.out.println("Digite as informações do carro:");
+        
+        System.out.print("Marca: ");
+        String marca = scanner.nextLine();
+        
+        System.out.print("Modelo: ");
+        String modelo = scanner.nextLine();
+        
+        System.out.print("Ano: ");
+        int ano = scanner.nextInt();
+        
+        System.out.print("Capacidade do tanque (litros): ");
+        double capacidade = scanner.nextDouble();
+        
+        // Criando o objeto Carro
+        Carro meuCarro = new Carro(modelo, marca, ano, capacidade);
+        
+        System.out.print("Digite o preço da gasolina por litro: R$");
+        double precoGasolina = scanner.nextDouble();
+        
+        System.out.println("\n" + "=".repeat(50));
+        meuCarro.exibirInformacoes();
+        
+        double totalParaEncher = meuCarro.calcularTotalEncherTanque(precoGasolina);
+        System.out.printf("Total para encher o tanque: R$%.2f%n", totalParaEncher);
+        
+        scanner.close();
+    }
+}
