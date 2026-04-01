@@ -1,0 +1,103 @@
+import java.util.Scanner;
+
+class ContaBancaria {
+    private double saldo;
+    private String titular;
+    
+    // Construtor
+    public ContaBancaria(String titular) {
+        this.titular = titular;
+        this.saldo = 0.0;
+    }
+    
+    public ContaBancaria(String titular, double saldoInicial) {
+        this.titular = titular;
+        if (saldoInicial >= 0) {
+            this.saldo = saldoInicial;
+        } else {
+            this.saldo = 0;
+            System.out.println("Saldo inicial não pode ser negativo. Definindo saldo como 0.");
+        }
+    }
+    
+    public double getSaldo() {
+        return saldo;
+    }
+    
+    public String getTitular() {
+        return titular;
+    }
+    
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+            System.out.println("Depositado: R$" + String.format("%.2f", valor));
+            System.out.println("Novo saldo: R$" + String.format("%.2f", saldo));
+        } else {
+            System.out.println("Valor de depósito inválido! O valor deve ser positivo.");
+        }
+    }
+    
+    public void sacar(double valor) {
+        if (valor > 0) {
+            if (valor <= saldo) {
+                saldo -= valor;
+                System.out.println("Sacado: R$" + String.format("%.2f", valor));
+                System.out.println("Novo saldo: R$" + String.format("%.2f", saldo));
+            } else {
+                System.out.println("Saldo insuficiente! Saldo atual: R$" + String.format("%.2f", saldo));
+            }
+        } else {
+            System.out.println("Valor de saque inválido! O valor deve ser positivo.");
+        }
+    }
+    
+    public void exibirInformacoesConta() {
+        System.out.println("Titular da conta: " + titular);
+        System.out.println("Saldo atual: R$" + String.format("%.2f", saldo));
+    }
+}
+
+public class Exercicio2ContaBancaria {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("========== EXERCÍCIO 2: CONTA BANCÁRIA ==========");
+        
+        System.out.print("Digite o nome do titular da conta: ");
+        String titular = scanner.nextLine();
+        
+        System.out.print("Digite o saldo inicial (opcional, Enter para 0): R$");
+        String saldoInicialInput = scanner.nextLine();
+        
+        ContaBancaria conta;
+        if (saldoInicialInput.isEmpty()) {
+            conta = new ContaBancaria(titular);
+        } else {
+            double saldoInicial = Double.parseDouble(saldoInicialInput);
+            conta = new ContaBancaria(titular, saldoInicial);
+        }
+        
+        System.out.println("\n" + "=".repeat(50));
+        conta.exibirInformacoesConta();
+        
+        System.out.println("\n--- Testando operação de depósito ---");
+        System.out.print("Digite o valor para depositar: R$");
+        double valorDeposito = scanner.nextDouble();
+        conta.depositar(valorDeposito);
+        
+        System.out.println("\n--- Testando operação de saque ---");
+        System.out.print("Digite o valor para sacar: R$");
+        double valorSaque = scanner.nextDouble();
+        conta.sacar(valorSaque);
+        
+        System.out.println("\n--- Testando operações inválidas ---");
+        System.out.println("Tentando depositar valor negativo (-50):");
+        conta.depositar(-50);
+        
+        System.out.println("\nTentando sacar valor maior que o saldo:");
+        conta.sacar(999999);
+        
+        scanner.close();
+    }
+}
