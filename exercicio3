@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+class Produto {
+    private String nome;
+    private double preco;
+    private int quantidadeEstoque;
+    
+    public Produto(String nome, double preco, int quantidadeEstoque) {
+        this.nome = nome;
+        setPreco(preco); // Usando setter para aplicar validação
+        setQuantidadeEstoque(quantidadeEstoque); // Usando setter para aplicar validação
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public double getPreco() {
+        return preco;
+    }
+    
+    public void setPreco(double preco) {
+        if (preco >= 0) {
+            this.preco = preco;
+        } else {
+            System.out.println("Erro: Preço não pode ser negativo! Preço definido como 0.");
+            this.preco = 0;
+        }
+    }
+    
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+    
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        if (quantidadeEstoque >= 0) {
+            this.quantidadeEstoque = quantidadeEstoque;
+        } else {
+            System.out.println("Erro: Quantidade em estoque não pode ser negativa! Quantidade definida como 0.");
+            this.quantidadeEstoque = 0;
+        }
+    }
+    
+    public void exibirInformacoesProduto() {
+        System.out.println("Produto: " + nome);
+        System.out.println("Preço: R$" + String.format("%.2f", preco));
+        System.out.println("Quantidade em estoque: " + quantidadeEstoque);
+    }
+}
+
+public class Exercicio3Produto {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("========== EXERCÍCIO 3: PRODUTO ==========");
+        System.out.println("Digite as informações do produto:");
+        
+        System.out.print("Nome do produto: ");
+        String nomeProduto = scanner.nextLine();
+        
+        System.out.print("Preço do produto: R$");
+        double precoProduto = scanner.nextDouble();
+        
+        System.out.print("Quantidade em estoque: ");
+        int quantidadeEstoque = scanner.nextInt();
+        
+        Produto produto = new Produto(nomeProduto, precoProduto, quantidadeEstoque);
+        
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println("Informações iniciais do produto:");
+        produto.exibirInformacoesProduto();
+        
+        System.out.println("\n--- Testando validação de preço (tentando definir preço negativo) ---");
+        System.out.println("Tentando definir preço como -50.00:");
+        produto.setPreco(-50.00);
+        System.out.println("Preço atual: R$" + String.format("%.2f", produto.getPreco()));
+        
+        System.out.println("\n--- Testando validação de estoque (tentando definir quantidade negativa) ---");
+        System.out.println("Tentando definir quantidade em estoque como -10:");
+        produto.setQuantidadeEstoque(-10);
+        System.out.println("Quantidade atual em estoque: " + produto.getQuantidadeEstoque());
+        
+        System.out.println("\n--- Atualizando com valores válidos ---");
+        System.out.print("Digite o novo preço válido: R$");
+        double novoPreco = scanner.nextDouble();
+        produto.setPreco(novoPreco);
+        
+        System.out.print("Digite a nova quantidade válida em estoque: ");
+        int novoEstoque = scanner.nextInt();
+        produto.setQuantidadeEstoque(novoEstoque);
+        
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println("Informações atualizadas do produto:");
+        produto.exibirInformacoesProduto();
+        
+        scanner.close();
+    }
+}
